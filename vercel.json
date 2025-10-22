@@ -1,10 +1,26 @@
 {
   "functions": {
-    "api/**/*.js": {
+    "src/app/api/**/*.js": {
       "runtime": "nodejs20.x"
     }
   },
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" }
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build/client"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/src/app/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/build/server/index.js"
+    }
   ]
 }
